@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Button = (props) => {
-    return <button>{props.value}</button>
+    return <button onClick={props.onDelete}>{props.buttonLabel}</button>
 };
 
 export default Button;

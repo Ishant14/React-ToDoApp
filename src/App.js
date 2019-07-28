@@ -9,34 +9,66 @@ class App extends React.Component {
     this.state = {
       todos : [
         {
-          value : 'xyz'
+          value : 'xyz',
+          id : 1564203759564,
+          completed : false
+
         },
         {
-          value : 'abc'
+          value : 'abc',
+          id : 1564203759565,
+          completed : false
         }
       ]
     }
+  
+  }
 
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.onDelete = this.onDelete.bind(this);
+
+  onToggleTodo = (id) => {
+    const updatedTodos  = this.state.todos.map((todo) => {
+        if (id === todo) {
+           return {
+             ...todo,
+             completed : !todo.completed
+           }; 
+        }
+        return todo;
+    })
+
+    this.setState({
+      todos : updatedTodos
+    })
   }
 
 
   handleKeyDown = (event) => {
     if (event.keyCode === 13) {
-        this.setState( {todos : [...this.state.todos,{value : event.target.value}]}); 
+        const todoItem = {
+          value : event.target.value,
+          id : Date.now(),
+          completed : 0
+        }
+        this.setState( {todos : [...this.state.todos, todoItem]}); 
     }
   }
 
-  onDelete = (index) => {
-    this.setState(this.state.todos.slice(1, index));
+  onDelete = (id) => {
+    const updatedTodos = this.state.todos.filter(todo => {
+      if (todo.id !== id) {
+        return todo;
+      }
+    });
+
+    this.setState({todos : updatedTodos});
   }
+
 
   render() {
     return (
       <div className="App">
         <input type="text" onKeyDown = {this.handleKeyDown}/>
-        <TodoList {...this.state} ondelete={this.onDelete} />
+        <TodoList {...this.state} onDelete={this.onDelete} onToggleTodo= {this.onToggleTodo}/>
       </div>
     )
   }

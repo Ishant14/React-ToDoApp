@@ -1,10 +1,11 @@
 import React from 'react';
+import Button from './button';
 
 const Todo = (props) => {
     return <div>
         <input type="checkbox"/>
         <label>{props.value}</label>
-        <button onClick={props.ondelete}>Delete</button>
+        <Button buttonLabel= {props.buttonLabel} onDelete={props.onDelete}/>
     </div>
 };
 
